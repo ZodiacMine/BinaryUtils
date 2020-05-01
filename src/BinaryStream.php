@@ -47,11 +47,23 @@ class BinaryStream{
 		$this->offset = 0;
 	}
 
+	public function extract() : string{
+		$buffer = $this->buffer;
+		$this->reset();
+
+		return $buffer;
+	}
+
+
 	/**
 	 * Rewinds the stream pointer to the start.
 	 */
 	public function rewind() : void{
 		$this->offset = 0;
+	}
+
+	public function skip(int $len) : void{
+		$this->offset += $len;
 	}
 
 	public function setOffset(int $offset) : void{
@@ -69,6 +81,10 @@ class BinaryStream{
 
 	public function getBuffer() : string{
 		return $this->buffer;
+	}
+
+	public function getBufferSize() : int{
+		return strlen($this->buffer);
 	}
 
 	/**
@@ -110,6 +126,10 @@ class BinaryStream{
 
 	public function put(string $str) : void{
 		$this->buffer .= $str;
+	}
+
+	public function putStream(BinaryStream $other) : void{
+		$this->buffer .= $other->getBuffer();
 	}
 
 
