@@ -54,7 +54,6 @@ class BinaryStream{
 		return $buffer;
 	}
 
-
 	/**
 	 * Rewinds the stream pointer to the start.
 	 */
@@ -88,10 +87,6 @@ class BinaryStream{
 	}
 
 	/**
-	 * @param int $len
-	 *
-	 * @return string
-	 *
 	 * @throws BinaryDataException if there are not enough bytes left in the buffer
 	 */
 	public function get(int $len) : string{
@@ -111,7 +106,6 @@ class BinaryStream{
 	}
 
 	/**
-	 * @return string
 	 * @throws BinaryDataException
 	 */
 	public function getRemaining() : string{
@@ -132,7 +126,6 @@ class BinaryStream{
 		$this->buffer .= $other->getBuffer();
 	}
 
-
 	public function getBool() : bool{
 		return $this->get(1) !== "\x00";
 	}
@@ -141,7 +134,6 @@ class BinaryStream{
 		$this->buffer .= ($v ? "\x01" : "\x00");
 	}
 
-
 	public function getByte() : int{
 		return ord($this->get(1));
 	}
@@ -149,7 +141,6 @@ class BinaryStream{
 	public function putByte(int $v) : void{
 		$this->buffer .= chr($v);
 	}
-
 
 	public function getShort() : int{
 		return Binary::readShort($this->get(2));
@@ -175,7 +166,6 @@ class BinaryStream{
 		$this->buffer .= Binary::writeLShort($v);
 	}
 
-
 	public function getTriad() : int{
 		return Binary::readTriad($this->get(3));
 	}
@@ -192,7 +182,6 @@ class BinaryStream{
 		$this->buffer .= Binary::writeLTriad($v);
 	}
 
-
 	public function getInt() : int{
 		return Binary::readInt($this->get(4));
 	}
@@ -208,7 +197,6 @@ class BinaryStream{
 	public function putLInt(int $v) : void{
 		$this->buffer .= Binary::writeLInt($v);
 	}
-
 
 	public function getFloat() : float{
 		return Binary::readFloat($this->get(4));
@@ -250,37 +238,24 @@ class BinaryStream{
 		$this->buffer .= Binary::writeLDouble($v);
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getLong() : int{
 		return Binary::readLong($this->get(8));
 	}
 
-	/**
-	 * @param int $v
-	 */
 	public function putLong(int $v) : void{
 		$this->buffer .= Binary::writeLong($v);
 	}
 
-	/**
-	 * @return int
-	 */
 	public function getLLong() : int{
 		return Binary::readLLong($this->get(8));
 	}
 
-	/**
-	 * @param int $v
-	 */
 	public function putLLong(int $v) : void{
 		$this->buffer .= Binary::writeLLong($v);
 	}
 
 	/**
 	 * Reads a 32-bit variable-length unsigned integer from the buffer and returns it.
-	 * @return int
 	 */
 	public function getUnsignedVarInt() : int{
 		return Binary::readUnsignedVarInt($this->buffer, $this->offset);
@@ -288,7 +263,6 @@ class BinaryStream{
 
 	/**
 	 * Writes a 32-bit variable-length unsigned integer to the end of the buffer.
-	 * @param int $v
 	 */
 	public function putUnsignedVarInt(int $v) : void{
 		$this->put(Binary::writeUnsignedVarInt($v));
@@ -296,7 +270,6 @@ class BinaryStream{
 
 	/**
 	 * Reads a 32-bit zigzag-encoded variable-length integer from the buffer and returns it.
-	 * @return int
 	 */
 	public function getVarInt() : int{
 		return Binary::readVarInt($this->buffer, $this->offset);
@@ -304,7 +277,6 @@ class BinaryStream{
 
 	/**
 	 * Writes a 32-bit zigzag-encoded variable-length integer to the end of the buffer.
-	 * @param int $v
 	 */
 	public function putVarInt(int $v) : void{
 		$this->put(Binary::writeVarInt($v));
@@ -312,7 +284,6 @@ class BinaryStream{
 
 	/**
 	 * Reads a 64-bit variable-length integer from the buffer and returns it.
-	 * @return int
 	 */
 	public function getUnsignedVarLong() : int{
 		return Binary::readUnsignedVarLong($this->buffer, $this->offset);
@@ -320,7 +291,6 @@ class BinaryStream{
 
 	/**
 	 * Writes a 64-bit variable-length integer to the end of the buffer.
-	 * @param int $v
 	 */
 	public function putUnsignedVarLong(int $v) : void{
 		$this->buffer .= Binary::writeUnsignedVarLong($v);
@@ -328,7 +298,6 @@ class BinaryStream{
 
 	/**
 	 * Reads a 64-bit zigzag-encoded variable-length integer from the buffer and returns it.
-	 * @return int
 	 */
 	public function getVarLong() : int{
 		return Binary::readVarLong($this->buffer, $this->offset);
@@ -336,7 +305,6 @@ class BinaryStream{
 
 	/**
 	 * Writes a 64-bit zigzag-encoded variable-length integer to the end of the buffer.
-	 * @param int $v
 	 */
 	public function putVarLong(int $v) : void{
 		$this->buffer .= Binary::writeVarLong($v);
@@ -344,7 +312,6 @@ class BinaryStream{
 
 	/**
 	 * Returns whether the offset has reached the end of the buffer.
-	 * @return bool
 	 */
 	public function feof() : bool{
 		return !isset($this->buffer[$this->offset]);
